@@ -1,0 +1,59 @@
+# IDE and editor files
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Temporary folders
+tmp/
+temp/
+.tmp/
+
+# Kubernetes
+*.kubeconfig
+kubeconfig
+.kube/
+*.pem
+*.key
+*.crt
+
+# Test artifacts
+test-results/
+test-output/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Security
+secrets/
+*.secret
+*.token
+
+# Environment variables
+.env
+.env.local
+.envrc
+
+
