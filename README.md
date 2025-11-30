@@ -158,76 +158,37 @@ spec:
 
 ```mermaid
 sequenceDiagram
-    participant Admin as Administrator/GitOps
+    participant Admin as Administrator
     participant API as Kubernetes API
+    participant Catalogd as Catalogd
     participant Registry as Container Registry
-    participant CD as Catalogd
-    participant CDS as Catalogd HTTP Server
-    participant OC as Operator Controller
-    participant EC as Extension Controller
-    participant Resolver as Resolver
-    participant BC as Bundle Cache
-    participant CC as Catalog Cache
+    participant Controller as Operator Controller
     participant NS as Target Namespace
 
-    Note over Registry,CD: Phase 1: Catalogd Background Operations (Continuous)
-    CD->>Registry: Pull catalog images
-    Registry->>CD: Return catalog content
-    CD->>CD: Unpack catalog data to Content Cache
-    CD->>CDS: Make catalog metadata available via HTTP
+    Note over Catalogd,Registry: Continuous Background Process
+    Catalogd->>Registry: Pull & cache catalog images
+    Catalogd->>Catalogd: Serve catalog metadata via HTTP
 
-    Note over Admin,API: Admin Creates Security Resources
-    Admin->>API: Create ServiceAccount
-    Admin->>API: Create Custom Role/ClusterRole
-    Admin->>API: Create RoleBinding/ClusterRoleBinding
-    Admin->>API: Apply ClusterExtension Manifest
+    Note over Admin,API: Administrator Actions
+    Admin->>API: Create ServiceAccount & RBAC
+    Admin->>API: Apply ClusterExtension
 
-    Note over API,NS: Phase 2: ClusterExtension Processing
-    API->>OC: ClusterExtension CR Created Event
-    OC->>EC: Trigger Extension Controller reconciliation
+    Note over API,NS: OLMv1 Deployment Flow
+    API->>Controller: ClusterExtension CR Created
+    Controller->>Catalogd: Query operator metadata
+    Catalogd->>Controller: Return bundle information
     
-    Note over EC: Step 1: Controller Detection
-    EC->>EC: Detect new ClusterExtension CR
+    Controller->>Controller: Resolve dependencies
+    Controller->>Registry: Pull operator bundle image
+    Registry->>Controller: Return bundle
     
-    Note over EC,CDS: Step 2: Catalog Query
-    EC->>CDS: Query for operator metadata (package, version)
-    CDS->>EC: Return bundle metadata from Content Cache
+    Controller->>NS: Deploy CRDs
+    Controller->>NS: Deploy Operator workload
     
-    Note over EC,Resolver: Step 3: Dependency Resolution
-    EC->>Resolver: Analyze bundle metadata
-    Resolver->>Resolver: Filter bundle references
-    Resolver->>Resolver: Resolve dependencies & compatibility
-    Resolver->>EC: Return resolved bundle image reference
-    
-    Note over EC,CC: Step 4: Catalog Cache Update
-    EC->>CC: Save resolved catalog information
-    CC->>EC: Confirmation
-    
-    Note over EC,Registry: Step 5: Bundle Retrieval
-    EC->>Registry: Pull Operator Bundle Image
-    Registry->>EC: Return bundle container
-    EC->>EC: Unpack bundle contents
-    
-    Note over EC,BC: Step 6: Bundle Processing
-    EC->>BC: Store unpacked bundle
-    BC->>EC: Bundle cached & validated
-    
-    Note over EC,NS: Step 7: Resource Deployment
-    EC->>NS: Install CRDs (using specified ServiceAccount)
-    EC->>NS: Deploy RBAC resources (if in bundle)
-    EC->>NS: Deploy ConfigMaps & Secrets
-    EC->>NS: Deploy Operator Deployment
-    EC->>NS: Deploy Services & supporting resources
-    
-    Note over NS: Phase 3: Operator Active
-    NS->>EC: Resources deployed successfully
-    
-    Note over EC: Step 8: Status Monitoring
-    loop Continuous Operation
-        EC->>NS: Monitor deployed resources
-        EC->>EC: Ensure desired state
-        EC->>API: Update ClusterExtension status
-        NS->>EC: Report resource health
+    Note over NS: Operator Running
+    loop Continuous Monitoring
+        Controller->>NS: Monitor operator health
+        Controller->>API: Update ClusterExtension status
     end
 ```
 
