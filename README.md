@@ -242,8 +242,8 @@ OLMv1-CaseStudy/
 3. **Choose a Deployment Method**
 
    - **Manual YAML**: Use the examples in `examples/yamls/` for step-by-step deployment
-   - **Helm Chart**: See the [OLMv1 Helm Chart](https://github.com/yourusername/OLMv1-Helm-Chart) repository for simplified deployment
-   - **RBAC Manager Tool**: Use the [OLMv1 RBAC Manager](https://github.com/yourusername/OLMv1-RBAC-Manager) for automated RBAC extraction and generation
+   - **Helm Chart**: See the [OLMv1 Helm Chart](https://github.com/JoeyJoHa/RH-OLMv1-Helm) repository for simplified deployment
+   - **RBAC Manager Tool**: Use the [OLMv1 RBAC Manager](https://github.com/JoeyJoHa/RH-OLMv1-RBAC-Manager-Tool) for automated RBAC extraction and generation
 
 4. **Deploy Your First Operator**
 
@@ -272,7 +272,7 @@ kubectl apply -f examples/yamls/04-clusterextension.yaml
 
 ### Helm Deployment
 
-For Helm-based deployments, see the [OLMv1 Helm Chart](https://github.com/yourusername/OLMv1-Helm-Chart) repository which includes:
+For Helm-based deployments, see the [OLMv1 Helm Chart](https://github.com/JoeyJoHa/RH-OLMv1-Helm) repository which includes:
 
 - Complete Helm chart templates
 - Example values files
@@ -280,7 +280,7 @@ For Helm-based deployments, see the [OLMv1 Helm Chart](https://github.com/yourus
 
 ### RBAC Manager Tool
 
-For automated RBAC extraction and generation, see the [OLMv1 RBAC Manager](https://github.com/yourusername/OLMv1-RBAC-Manager) repository which includes:
+For automated RBAC extraction and generation, see the [OLMv1 RBAC Manager](https://github.com/JoeyJoHa/RH-OLMv1-RBAC-Manager-Tool) repository which includes:
 
 - Tool documentation and usage
 - Configuration examples
@@ -324,8 +324,6 @@ This case study covers several common deployment scenarios:
 
 1. **Least Privilege RBAC**: Grant only the minimum required permissions
 2. **ServiceAccount Isolation**: Use dedicated ServiceAccounts per operator
-3. **Namespace Boundaries**: Prefer namespace-scoped permissions when possible
-4. **Regular Audits**: Review and audit RBAC permissions regularly
 
 ### Deployment
 
@@ -385,24 +383,8 @@ See the [Deployment Guide](docs/DEPLOYMENT.md) for more troubleshooting tips.
 
 ## Related Projects
 
-- **[OLMv1 Helm Chart](https://github.com/yourusername/OLMv1-Helm-Chart)**: Helm chart for simplified operator deployment
-- **[OLMv1 RBAC Manager](https://github.com/yourusername/OLMv1-RBAC-Manager)**: Tool for automated RBAC extraction and management
-
-## Contributing
-
-Contributions are welcome! This is a case study repository, so we especially appreciate:
-
-- Additional deployment examples
-- Documentation improvements
-- Real-world use cases
-- Best practices and lessons learned
-
-Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Add your examples or documentation
-4. Submit a pull request
+- **[OLMv1 Helm Chart](https://github.com/JoeyJoHa/RH-OLMv1-Helm)**: Helm chart for simplified operator deployment
+- **[OLMv1 RBAC Manager](https://github.com/JoeyJoHa/RH-OLMv1-RBAC-Manager-Tool)**: Tool for automated RBAC extraction and management
 
 ## Resources
 
@@ -411,22 +393,5 @@ Please:
 - [OLMv1 Documentation](https://github.com/openshift/operator-framework-operator-controller)
 - [Kubernetes Operators](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/)
 - [Operator Framework](https://operatorframework.io/)
-
-### Community
-
-- [Operator Framework Slack](https://kubernetes.slack.com/messages/operator-framework)
-- [OpenShift Community](https://www.openshift.com/community)
-
-## License
-
-[Specify your license here]
-
-## Acknowledgments
-
-- OpenShift Operator Framework team for OLMv1
-- Kubernetes community for operator patterns
-- Contributors to this case study
-
----
 
 **Note**: This is a case study and reference implementation. Always review and test configurations in your own environment before production use.

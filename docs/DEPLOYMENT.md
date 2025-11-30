@@ -133,13 +133,19 @@ oc delete project quay-operator
 
 ## Method 2: Helm Chart Deployment
 
-The project includes a generic Helm chart that can deploy any operator using OLMv1. This is the recommended approach for production deployments.
+A generic Helm chart is available for deploying any operator using OLMv1. This is the recommended approach for production deployments.
+
+For the complete Helm chart and detailed documentation, visit the [OLMv1 Helm Chart repository](https://github.com/JoeyJoHa/RH-OLMv1-Helm).
 
 ### Basic Installation
 
 ```bash
+# Clone the Helm chart repository
+git clone https://github.com/JoeyJoHa/RH-OLMv1-Helm.git
+cd RH-OLMv1-Helm
+
 # Install any operator using the generic chart
-helm install my-operator examples/helm/ \
+helm install my-operator . \
   --namespace my-operator \
   --create-namespace
 ```
@@ -148,23 +154,23 @@ helm install my-operator examples/helm/ \
 
 ```bash
 # Use custom values file
-helm install my-operator examples/helm/ \
+helm install my-operator . \
   --namespace my-operator \
   --create-namespace \
-  --values examples/helm/values.yaml
+  --values values.yaml
 
 # Use operator-specific values (e.g., Quay operator)
-helm install quay-operator examples/helm/ \
+helm install quay-operator . \
   --namespace quay-operator \
   --create-namespace \
-  --values examples/values/values-quay-operator.yaml
+  --values examples/values-quay-operator.yaml
 ```
 
 ### Management Operations
 
 ```bash
 # Upgrade existing installation
-helm upgrade my-operator examples/helm/ \
+helm upgrade my-operator . \
   --namespace my-operator
 
 # Check release status
@@ -177,18 +183,25 @@ helm list -n my-operator
 helm uninstall my-operator -n my-operator
 ```
 
+For complete Helm chart documentation, configuration options, and examples, see the [OLMv1 Helm Chart repository](https://github.com/JoeyJoHa/RH-OLMv1-Helm).
+
 ### Configuration Examples
 
 #### Basic Operator Configuration
 
 ```yaml
-# examples/helm/values.yaml
+# values.yaml (from OLMv1 Helm Chart repository)
 operator:
   name: "my-operator"
-  namespace: "my-operator"
+  create: true
   appVersion: "latest"
   channel: "stable"
   packageName: "my-operator-package"
+
+serviceAccount:
+  create: true
+  name: ""  # Auto-generated
+  bind: true
 
 permissions:
   clusterRoles:
@@ -204,13 +217,18 @@ permissions:
 #### Quay Operator Configuration
 
 ```yaml
-# examples/values/values-quay-operator.yaml
+# examples/values-quay-operator.yaml (from OLMv1 Helm Chart repository)
 operator:
   name: "quay-operator"
-  namespace: "quay-operator"
+  create: true
   appVersion: "3.10.13"
   channel: "stable-3.10"
   packageName: "quay-operator"
+
+serviceAccount:
+  create: true
+  name: ""  # Auto-generated
+  bind: true
 
 permissions:
   clusterRoles:
@@ -279,7 +297,7 @@ When cluster administrators provide pre-configured RBAC resources, you can confi
 ```yaml
 operator:
   name: "quay-operator"
-  namespace: "quay-operator"
+  create: true
 
 serviceAccount:
   create: false
@@ -296,7 +314,7 @@ When you have full administrative access and need specific resource names:
 ```yaml
 operator:
   name: "quay-operator"
-  namespace: "quay-operator"
+  create: true
 
 serviceAccount:
   create: true
@@ -332,7 +350,7 @@ When you need specific resource names:
 ```yaml
 operator:
   name: "quay-operator"
-  namespace: "quay-operator"
+  create: true
 
 serviceAccount:
   create: true
@@ -381,17 +399,17 @@ permissions:
 
 ```bash
 # Test template rendering without deployment
-helm template <release-name> helm/ --values <values-file>
+helm template <release-name> . --values <values-file>
 ```
 
 #### Chart Validation
 
 ```bash
 # Lint the chart for best practices
-helm lint helm/
+helm lint .
 
 # Validate against Kubernetes schemas
-helm template <release-name> helm/ | kubeval
+helm template <release-name> . | kubeval
 ```
 
 ### Troubleshooting

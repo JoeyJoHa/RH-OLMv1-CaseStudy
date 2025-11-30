@@ -2,7 +2,7 @@
 
 This section provides practical manual commands for interacting with OLMv1 catalogs and analyzing operator bundles using `opm render` and `curl` commands. These commands are useful for advanced users, automation scenarios, and understanding the underlying catalog structure.
 
-> **💡 Tip**: For easier RBAC extraction and operator analysis, consider using the [RBAC Manager Tool](../tools/rbac-manager/) which automates many of these manual processes with a user-friendly interface, configuration file support, and **intelligent permission optimization** that eliminates redundant RBAC rules between ClusterRoles and Roles.
+> **💡 Tip**: For easier RBAC extraction and operator analysis, consider using the [RBAC Manager Tool](https://github.com/JoeyJoHa/RH-OLMv1-RBAC-Manager-Tool) which automates many of these manual processes with a user-friendly interface, configuration file support, and **intelligent permission optimization** that eliminates redundant RBAC rules between ClusterRoles and Roles.
 
 ## Table of Contents
 
@@ -168,7 +168,7 @@ opm render registry.redhat.io/redhat/redhat-operator-index:v4.18 \
 ## Permission Analysis
 
 > **Note**: When analyzing operator permissions, always review both `clusterPermissions` and `permissions` sections. The Quay operator example above only shows `permissions` as it doesn't include `clusterPermissions`.
-> **⚠️ macOS/Windows Users**: When using `opm` with Podman, the `--skip-tls` flag may not work due to Podman's client-server architecture. You may need to configure insecure registries within the Podman Machine. See the [RBAC Manager documentation](../tools/rbac-manager/README.md#podman-machine-configuration-macoswindows) for detailed setup instructions.
+> **⚠️ macOS/Windows Users**: When using `opm` with Podman, the `--skip-tls` flag may not work due to Podman's client-server architecture. You may need to configure insecure registries within the Podman Machine. See the [RBAC Manager documentation](https://github.com/JoeyJoHa/RH-OLMv1-RBAC-Manager-Tool#podman-machine-configuration-macoswindows) for detailed setup instructions.
 
 **Query required permissions for an operator:**
 
@@ -334,7 +334,7 @@ opm render registry.redhat.io/quay/quay-operator-bundle@sha256:c431ad9dfd69c049e
 
 ## RBAC Manager Tool
 
-For automated processing of these manual commands and more user-friendly interfaces, consider using the **[RBAC Manager Tool](../tools/rbac-manager/)** which provides:
+For automated processing of these manual commands and more user-friendly interfaces, consider using the **[RBAC Manager Tool](https://github.com/JoeyJoHa/RH-OLMv1-RBAC-Manager-Tool)** which provides:
 
 - **Automated RBAC extraction** from operator bundles with intelligent permission optimization
 - **Interactive catalog discovery** and package selection
@@ -345,4 +345,4 @@ For automated processing of these manual commands and more user-friendly interfa
 
 The RBAC Manager tool automates many of these manual processes and provides additional features like configuration file support, automatic cluster discovery, live catalogd data extraction, and integrated deployment capabilities.
 
-See the [RBAC Manager Tool documentation](../tools/rbac-manager/README.md) for complete usage instructions and examples.
+See the [RBAC Manager Tool documentation](https://github.com/JoeyJoHa/RH-OLMv1-RBAC-Manager-Tool) for complete usage instructions and examples.
