@@ -143,7 +143,7 @@ spec:
 
 ### Visual Architecture Reference
 
-![OLMv1 Architecture Diagram](images/OLMv1%20Architecture%20Diagram.svg)
+![OLMv1 Architecture Diagram](images/OLMv1%20Architecture%20Diagram.jpg)
 
 *The diagram above shows the complete OLMv1 architecture and data flow between components.*
 
